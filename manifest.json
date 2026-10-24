@@ -1,24 +1,42 @@
 {
+  "id": "/index.html",
   "short_name": "NumSlide",
   "name": "NumSlide Neon - Sliding Puzzle",
   "description": "Slide the numbered tiles into order in this fast-paced neon puzzle game!",
   "icons": [
     {
-      "src": "https://raw.githubusercontent.com/pwabuilder/PWABuilder/main/assets/icon.png",
+      "src": "https://cdn-icons-png.flaticon.com/512/5726/5726532.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
     },
     {
-      "src": "https://raw.githubusercontent.com/pwabuilder/PWABuilder/main/assets/icon.png",
+      "src": "https://cdn-icons-png.flaticon.com/192/5726/5726532.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://placehold.co/1280x720/071426/36a3ff.png?text=NumSlide+Desktop",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Desktop view of NumSlide Neon"
+    },
+    {
+      "src": "https://placehold.co/720x1280/071426/36a3ff.png?text=NumSlide+Mobile",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile view of NumSlide Neon"
     }
   ],
   "start_url": "./index.html",
   "background_color": "#071426",
   "theme_color": "#087BFF",
   "display": "standalone",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "categories": ["games", "entertainment"]
 }
