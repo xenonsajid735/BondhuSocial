@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BondhuSocial</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>BondhuSocial</h1>
+    <input id="search" type="search" placeholder="Search friends...">
+    <button id="profileBtn">My Profile</button>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <button data-tab="Home">🏠 Home</button>
+      <button data-tab="Friends">👥 Friends</button>
+      <button data-tab="Messages">💬 Messages</button>
+      <button data-tab="Notifications">🔔 Notifications</button>
+      <button data-tab="Profile">👤 Profile</button>
+    </aside>
+
+    <section class="feed">
+      <h2 id="pageTitle">Home Feed</h2>
+
+      <form id="postForm" class="card">
+        <textarea id="postText" maxlength="1000"
+          placeholder="What's on your mind?" required></textarea>
+        <button class="primary" type="submit">Create Post</button>
+      </form>
+
+      <div id="posts"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
