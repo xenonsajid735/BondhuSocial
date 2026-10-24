@@ -1,7 +1,7 @@
 {
-  "short_name": "SolveNumbers",
-  "name": "Solve the numbers",
-  "description": "Solve the numbers - Slide. Solve. Win! A neon number sliding puzzle",
+  "short_name": "NumSlide",
+  "name": "Slide the numbers",
+  "description": "Slide the numbers - Slide. Solve. Win! A neon number sliding puzzle",
   "icons": [
     {
       "src": "icon-192.png",
