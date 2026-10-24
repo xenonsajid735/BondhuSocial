@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#087BFF">
+    <meta name="description" content="Solve the numbers - Slide. Solve. Win! A neon number sliding puzzle">
+    
+    <!-- PWA Manifest Link -->
+    <link rel="manifest" href="./manifest.json">
+    
+    <title>Solve the numbers</title>
+
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #071426;
+            --panel: #0d1e35;
+            --tile: #17345a;
+            --accent: #36a3ff;
+            --purple: #8b5cff;
+            --text: #ffffff;
+        }
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+        main {
+            width: 100%;
+            max-width: 400px;
+            background: var(--panel);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(54, 163, 255, 0.2);
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(54, 163, 255, 0.5);
+        }
+        p.subtitle {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #8fa3bf;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .stat-box {
+            background: rgba(23, 52, 90, 0.6);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .stat-box span {
+            display: block;
+            font-weight: bold;
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-top: 4px;
+        }
+        .board-wrap {
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(54, 163, 255, 0.1), rgba(139, 92, 255, 0.1));
+            border-radius: 16px;
+            border: 1px solid rgba(54, 163, 255, 0.3);
+            margin-bottom: 20px;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            aspect-ratio: 1;
+        }
+        .tile {
+            background: var(--tile);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text);
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .tile:hover {
+            background: #1f4578;
+            box-shadow: 0 0 15px rgba(54, 163, 255, 0.4);
+        }
+        .tile:active {
+            transform: scale(0.95);
+        }
+        .tile.empty {
+            background: transparent;
+            box-shadow: none;
+            border: none;
+            cursor: default;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        .btn {
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(54, 163, 255, 0.3);
+            transition: opacity 0.2s, transform 0.1s;
+            text-align: center;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        .win-message {
+            text-align: center;
+            color: #4cd137;
+            font-weight: bold;
+            margin-bottom: 15px;
+            min-height: 20px;
+            text-shadow: 0 0 8px rgba(76, 209, 55, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <h1>Solve The Numbers</h1>
+        <p class="subtitle">Slide to order numbers from 1 to 8</p>
+
+        <div class="stats">
+            <div class="stat-box">Moves <span id="moves">0</span></div>
+            <div class="stat-box">Time <span id="timer">00:00</span></div>
+        </div>
+
+        <div class="win-message" id="winMessage"></div>
+
+        <div class="board-wrap">
+            <div class="board" id="board"></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" id="restartBtn">Restart Game</button>
+        </div>
+    </main>
+
+    <script>
+        const boardEl = document.getElementById('board');
+        const movesEl = document.getElementById('moves');
+        const timerEl = document.getElementById('timer');
+        const restartBtn = document.getElementById('restartBtn');
+        const winMessageEl = document.getElementById('winMessage');
+
+        let tiles = [1, 2, 3, 4, 5, 6, 7, '', 8]; // Initial layout
+        let moves = 0;
+        let timer = 0;
+        let timerInterval = null;
+        let isPlaying = false;
+        let isWon = false;
+
+        const winningState = [1, 2, 3, 4, 5, 6, 7, 8, ''];
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timer = 0;
+            timerInterval = setInterval(() => {
+                timer++;
+                let mins = Math.floor(timer / 60).toString().padStart(2, '0');
+                let secs = (timer % 60).toString().padStart(2, '0');
+                timerEl.innerText = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function shuffle() {
+            // Perform random valid moves to ensure solvability
+            for (let i = 0; i < 100; i++) {
+                const emptyIdx = tiles.indexOf('');
+                const validMoves = getValidMoves(emptyIdx);
+                const randomMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+                tiles[emptyIdx] = tiles[randomMove];
+                tiles[randomMove] = '';
+            }
+            // If accidentally already won after shuffle, shuffle again
+            if (checkWinCondition()) {
+                shuffle();
+            }
+        }
+
+        function getValidMoves(emptyIdx) {
+            const row = Math.floor(emptyIdx / 3);
+            const col = emptyIdx % 3;
+            const valid = [];
+            if (row > 0) valid.push(emptyIdx - 3); // Up
+            if (row < 2) valid.push(emptyIdx + 3); // Down
+            if (col > 0) valid.push(emptyIdx - 1); // Left
+            if (col < 2) valid.push(emptyIdx + 1); // Right
+            return valid;
+        }
+
+        function handleTileClick(index) {
+            if (isWon) return;
+
+            const emptyIdx = tiles.indexOf('');
+            const validMoves = getValidMoves(emptyIdx);
+
+            if (validMoves.includes(index)) {
+                if (!isPlaying) {
+                    isPlaying = true;
+                    startTimer();
+                }
+
+                // Swap
+                tiles[emptyIdx] = tiles[index];
+                tiles[index] = '';
+                moves++;
+                movesEl.innerText = moves;
+
+                renderBoard();
+
+                if (checkWinCondition()) {
+                    isWon = true;
+                    clearInterval(timerInterval);
+                    winMessageEl.innerText = `🎉 Awesome! You solved it in ${moves} moves!`;
+                }
+            }
+        }
+
+        function checkWinCondition() {
+            for (let i = 0; i < tiles.length; i++) {
+                if (tiles[i] !== winningState[i]) return false;
+            }
+            return true;
+        }
+
+        function renderBoard() {
+            boardEl.innerHTML = '';
+            tiles.forEach((tile, index) => {
+                const tileEl = document.createElement('div');
+                tileEl.classList.add('tile');
+                if (tile === '') {
+                    tileEl.classList.add('empty');
+                } else {
+                    tileEl.innerText = tile;
+                    tileEl.addEventListener('click', () => handleTileClick(index));
+                }
+                boardEl.appendChild(tileEl);
+            });
+        }
+
+        function initGame() {
+            isWon = false;
+            isPlaying = false;
+            moves = 0;
+            movesEl.innerText = moves;
+            timerEl.innerText = "00:00";
+            winMessageEl.innerText = "";
+            if (timerInterval) clearInterval(timerInterval);
+
+            shuffle();
+            renderBoard();
+        }
+
+        restartBtn.addEventListener('click', initGame);
+
+        // Initial setup
+        initGame();
+    </script>
+</body>
+</html>
