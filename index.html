@@ -176,6 +176,11 @@
     </main>
 
     <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+      .then(() => console.log("Service Worker Registered Successfully!"));
+  }
+</script>
         const boardEl = document.getElementById('board');
         const movesEl = document.getElementById('moves');
         const timerEl = document.getElementById('timer');
