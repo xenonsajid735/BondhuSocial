@@ -1,4 +1,3 @@
-
 {
   "id": "/solve-the-numbers/",
   "name": "Solve the numbers",
@@ -12,10 +11,19 @@
   "theme_color": "#087BFF",
   "icons": [
     {
-      "src": "Neon Solve the Numbers icon.png",
+      "src": "/solve-the-numbers/Neon%20Solve%20the%20Numbers%20icon.png",
       "sizes": "1254x1254",
       "type": "image/png",
       "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/solve-the-numbers/solve-numbers-home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Solve the Numbers game home screen"
     }
   ]
 }
