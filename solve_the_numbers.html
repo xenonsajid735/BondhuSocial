@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#071426">
+<meta name="description" content="Solve the numbers — Slide. Solve. Win! A neon number sliding puzzle game.">
+<title>Solve the numbers</title>
+<style>
+:root{color-scheme:dark;--bg:#071426;--panel:#0d1e35;--tile:#17345a;--accent:#36a3ff;--purple:#8b5cff;--text:#f4f8ff;--muted:#a8bfdf}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#102e58 0%,var(--bg) 58%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);display:flex;justify-content:center;padding:22px 14px 36px}
+main{width:min(100%,470px)}.splash{text-align:center;min-height:82vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 12px}.brand-mark{display:grid;grid-template-columns:repeat(2,58px);gap:7px;padding:12px;border:1px solid #36a3ff70;border-radius:24px;background:#0d1e35;box-shadow:0 0 38px #1688ff35;margin-bottom:24px}.brand-mark span{display:grid;place-items:center;width:58px;height:58px;border-radius:12px;background:linear-gradient(145deg,#38aaff,#1761ca);color:#fff;font-weight:900;font-size:1.8rem;box-shadow:inset 0 1px #ffffff55}.brand-mark span:last-child{background:#0a1830;border:1px dashed #36a3ff80;color:#36a3ff}.splash h1{font-size:clamp(2.2rem,10vw,3.4rem);margin:10px 0;background:linear-gradient(90deg,#36a3ff,#fff,#8b5cff);-webkit-background-clip:text;background-clip:text;color:transparent}.splash .tagline{color:#d8e8ff;font-weight:750;letter-spacing:.04em}.splash .intro{max-width:300px;color:var(--muted);line-height:1.55;margin:8px 0 26px}.start-btn{width:100%;max-width:300px;padding:16px;border-radius:16px;background:linear-gradient(90deg,#36a3ff,#2477ed);color:#fff;border:1px solid #8acbff80;font:inherit;font-weight:850;font-size:1.05rem;box-shadow:0 8px 28px #167cff35;cursor:pointer}.splash .tiny{color:#6f8db6;font-size:.75rem;margin-top:20px}header{text-align:center;margin:8px 0 22px} .eyebrow{font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:800}h1{font-size:clamp(2rem,8vw,3rem);line-height:1.05;margin:8px 0;background:linear-gradient(90deg,var(--accent),#fff,var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}header p{color:var(--muted);margin:8px 0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}.stat{background:#11182bdc;border:1px solid #ffffff12;border-radius:16px;padding:12px 8px;text-align:center}.stat small{display:block;color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em}.stat strong{font-size:1.3rem;display:block;margin-top:4px;font-variant-numeric:tabular-nums}
+.board-wrap{padding:10px;background:linear-gradient(135deg,#36a3ff25,#8b5cff20);border:1px solid #ffffff16;border-radius:23px;box-shadow:0 20px 60px #0006}.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;touch-action:manipulation}.tile{aspect-ratio:1;border:1px solid #ffffff12;border-radius:14px;background:linear-gradient(145deg,#204a78,#112b4a);color:var(--text);font-size:clamp(1.25rem,6vw,2rem);font-weight:800;box-shadow:inset 0 1px #ffffff12,0 4px 8px #0002;cursor:pointer;transition:transform .12s,background .12s;display:grid;place-items:center}.tile:active{transform:scale(.95)}.tile:focus-visible,.btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}.tile:nth-child(4n+1){border-color:#36a3ff2c}.tile.empty{background:#080d1b80;border:1px dashed #ffffff17;box-shadow:none;cursor:default}.tile.correct{background:linear-gradient(145deg,#145f9b,#123f75);border-color:#36a3ff75}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}.btn{border:0;border-radius:14px;padding:14px 12px;font:inherit;font-weight:750;cursor:pointer}.primary{background:var(--accent);color:#07121c}.secondary{background:#ffffff0d;color:var(--text);border:1px solid #ffffff20}.message{min-height:28px;text-align:center;color:var(--accent);font-weight:700;margin:6px 0 12px}.help{color:var(--muted);font-size:.88rem;line-height:1.55;background:#11182b99;border:1px solid #ffffff12;border-radius:16px;padding:14px 16px}.help strong{color:var(--text)}footer{text-align:center;color:#73809c;font-size:.75rem;margin-top:18px}
+@media(max-width:360px){.board{gap:5px}.tile{border-radius:10px}.board-wrap{padding:7px}.stats{gap:6px}.stat{padding:10px 5px}}
+</style>
+</head>
+<body>
+<main>
+<section class="splash" id="splash" aria-label="Welcome screen">
+  <div class="brand-mark" aria-label="Number tile logo"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+  <div class="eyebrow">A Neon Number Puzzle</div>
+  <h1>Solve the numbers</h1>
+  <p class="tagline">Slide. Solve. Win!</p>
+  <p class="intro">Put every number in order. Think smart, make each move count, and beat your best score.</p>
+  <button class="start-btn" id="startGame">Start Puzzle&nbsp; →</button>
+  <p class="tiny">MADE FOR PUZZLE LOVERS</p>
+</section>
+<div id="gameScreen" hidden>
+<header>
+  <div class="eyebrow">Brain training • Level 01</div>
+  <h1>Solve the numbers</h1>
+  <p>Slide the tiles into the correct order.</p>
+</header>
+<section class="stats" aria-label="Game statistics">
+  <div class="stat"><small>Moves</small><strong id="moves">0</strong></div>
+  <div class="stat"><small>Time</small><strong id="time">00:00</strong></div>
+  <div class="stat"><small>Best</small><strong id="best">—</strong></div>
+</section>
+<div class="board-wrap"><div class="board" id="board" role="group" aria-label="Number puzzle board"></div></div>
+<div class="message" id="message" role="status" aria-live="polite">Ready? Tap a tile next to the empty space.</div>
+<div class="controls">
+  <button class="btn primary" id="newGame">↻ New Game</button>
+  <button class="btn secondary" id="reset">Restart Layout</button>
+</div>
+<section class="help">
+  <strong>How to play</strong><br>
+  Tap or click a tile beside the empty square to move it. Arrange the numbers from <strong>1 to 15</strong>, with the empty space at the end. Try to finish in as few moves as possible!
+</section>
+<footer>Solve the numbers • Slide. Solve. Win!</footer>
+</div>
+</main>
+<script>
+(() => {
+  "use strict";
+  const boardEl = document.getElementById("board");
+  const movesEl = document.getElementById("moves");
+  const timeEl = document.getElementById("time");
+  const bestEl = document.getElementById("best");
+  const messageEl = document.getElementById("message");
+  const newGameBtn = document.getElementById("newGame");
+  const resetBtn = document.getElementById("reset");
+  const splashEl = document.getElementById("splash");
+  const gameScreenEl = document.getElementById("gameScreen");
+  const startGameBtn = document.getElementById("startGame");
+  const BEST_KEY = "solveTheNumbersBestMoves";
+  let tiles = [];
+  let moves = 0;
+  let seconds = 0;
+  let timerId = null;
+  let started = false;
+  let won = false;
+  let initialLayout = [];
+
+  function formatTime(total) {
+    const m = String(Math.floor(total / 60)).padStart(2, "0");
+    const s = String(total % 60).padStart(2, "0");
+    return `${m}:${s}`;
+  }
+  function updateStats() {
+    movesEl.textContent = moves;
+    timeEl.textContent = formatTime(seconds);
+    try { bestEl.textContent = localStorage.getItem(BEST_KEY) || "—"; }
+    catch (_) { bestEl.textContent = "—"; }
+  }
+  function startTimer() {
+    if (timerId || won) return;
+    started = true;
+    timerId = setInterval(() => {
+      seconds++;
+      timeEl.textContent = formatTime(seconds);
+    }, 1000);
+  }
+  function stopTimer() {
+    if (timerId) clearInterval(timerId);
+    timerId = null;
+  }
+  function isSolved() {
+    return tiles.every((v, i) => v === (i === 15 ? 0 : i + 1));
+  }
+  function canMove(index) {
+    const empty = tiles.indexOf(0);
+    const row = Math.floor(index / 4), col = index % 4;
+    const erow = Math.floor(empty / 4), ecol = empty % 4;
+    return Math.abs(row - erow) + Math.abs(col - ecol) === 1;
+  }
+  function render() {
+    boardEl.innerHTML = "";
+    tiles.forEach((value, index) => {
+      const button = document.createElement("button");
+      button.className = "tile" + (value === 0 ? " empty" : "");
+      if (value !== 0 && value === index + 1) button.classList.add("correct");
+      button.type = "button";
+      button.setAttribute("aria-label", value === 0 ? "Empty space" : `Tile ${value}`);
+      button.disabled = value === 0 || won;
+      button.textContent = value === 0 ? "" : value;
+      button.addEventListener("click", () => moveTile(index));
+      boardEl.appendChild(button);
+    });
+  }
+  function moveTile(index) {
+    if (won || !canMove(index)) return;
+    startTimer();
+    const empty = tiles.indexOf(0);
+    [tiles[index], tiles[empty]] = [tiles[empty], tiles[index]];
+    moves++;
+    updateStats();
+    render();
+    if (isSolved()) finishGame();
+  }
+  function finishGame() {
+    won = true;
+    stopTimer();
+    render();
+    messageEl.textContent = `🎉 Puzzle solved in ${moves} moves and ${formatTime(seconds)}!`;
+    try {
+      const oldBest = Number(localStorage.getItem(BEST_KEY));
+      if (!oldBest || moves < oldBest) localStorage.setItem(BEST_KEY, String(moves));
+    } catch (_) {}
+    updateStats();
+  }
+  function shuffle() {
+    // Start solved and make legal random moves, guaranteeing a solvable puzzle.
+    tiles = Array.from({length: 16}, (_, i) => i === 15 ? 0 : i + 1);
+    let previousEmpty = -1;
+    for (let i = 0; i < 350; i++) {
+      const empty = tiles.indexOf(0);
+      const r = Math.floor(empty / 4), c = empty % 4;
+      const candidates = [];
+      if (r > 0) candidates.push(empty - 4);
+      if (r < 3) candidates.push(empty + 4);
+      if (c > 0) candidates.push(empty - 1);
+      if (c < 3) candidates.push(empty + 1);
+      const filtered = candidates.filter(x => x !== previousEmpty);
+      const chosen = (filtered.length ? filtered : candidates)[Math.floor(Math.random() * (filtered.length ? filtered : candidates).length)];
+      [tiles[empty], tiles[chosen]] = [tiles[chosen], tiles[empty]];
+      previousEmpty = empty;
+    }
+    if (isSolved()) return shuffle();
+    initialLayout = [...tiles];
+    moves = 0; seconds = 0; started = false; won = false;
+    stopTimer();
+    updateStats();
+    render();
+    messageEl.textContent = "Ready? Tap a tile next to the empty space.";
+  }
+  function restartLayout() {
+    if (!initialLayout.length) return shuffle();
+    tiles = [...initialLayout];
+    moves = 0; seconds = 0; started = false; won = false;
+    stopTimer();
+    updateStats();
+    render();
+    messageEl.textContent = "Layout restarted. Good luck!";
+  }
+  document.addEventListener("keydown", (event) => {
+    const empty = tiles.indexOf(0);
+    let target = -1;
+    if (event.key === "ArrowUp" && empty < 12) target = empty + 4;
+    if (event.key === "ArrowDown" && empty >= 4) target = empty - 4;
+    if (event.key === "ArrowLeft" && empty % 4 < 3) target = empty + 1;
+    if (event.key === "ArrowRight" && empty % 4 > 0) target = empty - 1;
+    if (target >= 0) { event.preventDefault(); moveTile(target); }
+  });
+  newGameBtn.addEventListener("click", shuffle);
+  resetBtn.addEventListener("click", restartLayout);
+  startGameBtn.addEventListener("click", () => { splashEl.hidden = true; gameScreenEl.hidden = false; });
+  shuffle();
+})();
+</script>
+</body>
+</html>
