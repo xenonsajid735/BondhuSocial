@@ -188,6 +188,18 @@ main{width:min(100%,470px)}.splash{text-align:center;min-height:82vh;display:fle
   startGameBtn.addEventListener("click", () => { splashEl.hidden = true; gameScreenEl.hidden = false; });
   shuffle();
 })();
-</script>
+</script> 
+<script>     
+ if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => {
+        console.log("Service Worker registered successfully!");
+      })
+      .catch((error) => {
+        console.error("Service Worker registration failed:", error);
+      });
+  });
+}
 </body>
 </html>
