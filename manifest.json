@@ -1,0 +1,21 @@
+
+{
+  "id": "/solve-the-numbers/",
+  "name": "Solve the numbers",
+  "short_name": "Solve Numbers",
+  "description": "Slide. Solve. Win!",
+  "start_url": "/solve-the-numbers/",
+  "scope": "/solve-the-numbers/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080B1A",
+  "theme_color": "#087BFF",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
