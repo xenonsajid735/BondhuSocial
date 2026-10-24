@@ -1,23 +1,24 @@
 {
   "short_name": "NumSlide",
-  "name": "Slide the numbers",
-  "description": "Slide the numbers - Slide. Solve. Win! A neon number sliding puzzle",
+  "name": "NumSlide Neon - Sliding Puzzle",
+  "description": "Slide the numbered tiles into order in this fast-paced neon puzzle game!",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "https://raw.githubusercontent.com/pwabuilder/PWABuilder/main/assets/icon.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "https://raw.githubusercontent.com/pwabuilder/PWABuilder/main/assets/icon.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     }
   ],
   "start_url": "./index.html",
   "background_color": "#071426",
   "theme_color": "#087BFF",
   "display": "standalone",
-  "orientation": "portrait",
-  "categories": ["games", "entertainment"]
+  "orientation": "portrait"
 }
