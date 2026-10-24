@@ -1,0 +1,23 @@
+{
+  "short_name": "SolveNumbers",
+  "name": "Solve the numbers",
+  "description": "Solve the numbers - Slide. Solve. Win! A neon number sliding puzzle",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#071426",
+  "theme_color": "#087BFF",
+  "display": "standalone",
+  "orientation": "portrait",
+  "categories": ["games", "entertainment"]
+}
