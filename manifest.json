@@ -1,35 +1,23 @@
 {
-  "id": "/solve-the-numbers/",
+  "short_name": "SolveNumbers",
   "name": "Solve the numbers",
-  "short_name": "Solve Numbers",
-  "description": "Slide. Solve. Win!",
-  "start_url": "/solve-the-numbers/",
-  "scope": "/solve-the-numbers/",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#080B1A",
-  "theme_color": "#087BFF",
+  "description": "Solve the numbers - Slide. Solve. Win! A neon number sliding puzzle",
   "icons": [
     {
-      "src": "/solve-the-numbers/Neon%20Solve%20the%20Numbers%20icon.png",
-      "sizes": "1254x1254",
+      "src": "https://via.placeholder.com/192.png",
       "type": "image/png",
-      "purpose": "any"
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://via.placeholder.com/512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
- "screenshots": [
-  {
-    "src": "/screenshots/screen1.png",
-    "sizes": "1152x2560",
-    "type": "image/jpeg",
-    "form_factor": "wide",
-    "label": "Homescreen of App"
-  },
-  {
-    "src": "/screenshots/screen2.png",
-    "sizes": "1152x2560",
-    "type": "image/jpeg",
-    "form_factor": "narrow",
-    "label": "Mobile view of App"
-  }
-]
+  "start_url": "./index.html",
+  "background_color": "#071426",
+  "theme_color": "#087BFF",
+  "display": "standalone",
+  "orientation": "portrait",
+  "categories": ["games", "entertainment"]
+}
