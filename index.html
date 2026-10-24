@@ -9,7 +9,7 @@
     <!-- PWA Manifest Link -->
     <link rel="manifest" href="./manifest.json">
     
-    <title>Solve the numbers</title>
+    <title>NumSlide Neon</title>
 
     <style>
         :root {
@@ -124,6 +124,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 10px;
+        }
         .btn {
             background: linear-gradient(135deg, var(--accent), var(--purple));
             color: white;
@@ -156,7 +157,7 @@
 <body>
 
     <main>
-        <h1>Solve The Numbers</h1>
+        <h1>NumSlide Neon</h1>
         <p class="subtitle">Slide to order numbers from 1 to 8</p>
 
         <div class="stats">
@@ -171,23 +172,19 @@
         </div>
 
         <div class="controls">
-            <button class="btn" id="restartBtn">Restart Game</button>
+            <button class="btn" id="restartBtn">Restart Game Form</button>
         </div>
     </main>
 
+    <!-- JavaScript OBOSHSHOI script tag er bhetore thakbe -->
     <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-      .then(() => console.log("Service Worker Registered Successfully!"));
-  }
-</script>
         const boardEl = document.getElementById('board');
         const movesEl = document.getElementById('moves');
         const timerEl = document.getElementById('timer');
         const restartBtn = document.getElementById('restartBtn');
         const winMessageEl = document.getElementById('winMessage');
 
-        let tiles = [1, 2, 3, 4, 5, 6, 7, '', 8]; // Initial layout
+        let tiles = [1, 2, 3, 4, 5, 6, 7, '', 8];
         let moves = 0;
         let timer = 0;
         let timerInterval = null;
@@ -208,7 +205,6 @@
         }
 
         function shuffle() {
-            // Perform random valid moves to ensure solvability
             for (let i = 0; i < 100; i++) {
                 const emptyIdx = tiles.indexOf('');
                 const validMoves = getValidMoves(emptyIdx);
@@ -216,7 +212,6 @@
                 tiles[emptyIdx] = tiles[randomMove];
                 tiles[randomMove] = '';
             }
-            // If accidentally already won after shuffle, shuffle again
             if (checkWinCondition()) {
                 shuffle();
             }
@@ -226,10 +221,10 @@
             const row = Math.floor(emptyIdx / 3);
             const col = emptyIdx % 3;
             const valid = [];
-            if (row > 0) valid.push(emptyIdx - 3); // Up
-            if (row < 2) valid.push(emptyIdx + 3); // Down
-            if (col > 0) valid.push(emptyIdx - 1); // Left
-            if (col < 2) valid.push(emptyIdx + 1); // Right
+            if (row > 0) valid.push(emptyIdx - 3);
+            if (row < 2) valid.push(emptyIdx + 3);
+            if (col > 0) valid.push(emptyIdx - 1);
+            if (col < 2) valid.push(emptyIdx + 1);
             return valid;
         }
 
@@ -245,7 +240,6 @@
                     startTimer();
                 }
 
-                // Swap
                 tiles[emptyIdx] = tiles[index];
                 tiles[index] = '';
                 moves++;
@@ -298,7 +292,6 @@
 
         restartBtn.addEventListener('click', initGame);
 
-        // Initial setup
         initGame();
     </script>
 </body>
